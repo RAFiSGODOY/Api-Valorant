@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useNavigation }from '@react-navigation/native';
+import Gengar from '../../assets/gifapp.gif';
 
 
 
@@ -10,16 +11,16 @@ import {useNavigation }from '@react-navigation/native';
     return(
         <View style={styles.container}>
             <View style={styles.containerLogo}>
-                <Animatable.Image
+                <Animatble.Image
                 animation="flipInY"
-                source={require('../../assets/logo.png')}
+                source={require('../../assets/logoapp.gif')}
                 style={{width:'100%'}}
                 resizeMode = "contain"
                 />
             </View>
 
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
-            <Text style={styles.ApresentaApp}>Descubra uma nova dimensão de aprendizado com o Innova Med - onde a diversão se encontra com a educação!</Text>
+            <Text style={styles.ApresentaApp}>Conecte-se ao fascinante mundo dos Pokémons através da nossa API e desbloqueie um universo de informações e aventuras.</Text>
             <Text style={styles.FÇlogin}>Faça o login para começar</Text>
             <TouchableOpacity style={styles.button}
             onPress={() => navigation.navigate('SignIn')}
@@ -37,11 +38,11 @@ import {useNavigation }from '@react-navigation/native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor : '#0c0634',
+        backgroundColor : '#060607',
     },
     containerLogo:{
         flex: 2,
-        backgroundColor: '#0c0634',
+        backgroundColor: '#060607',
         justifyContent: 'center',
         alignItems: ' center',
 
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     },
     button: {
         position: 'absolute',
-        backgroundColor: '#0c0634',
+        backgroundColor: '#060607',
         borderRadius: 50,
         paddingVertical: 8,
         width: '60%',

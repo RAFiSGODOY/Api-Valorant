@@ -4,6 +4,7 @@ import SignIn from '../pages/SignIn';
 import Home from '../pages/Home';
 
 
+
 const Stack= createNativeStackNavigator();
 
 
@@ -13,18 +14,18 @@ export default function Routes(){
             <Stack.Screen
             name="Welcome"
             component={Welcome}
-            options={{headerShown: false}} // retirar os header da pagina
+            options={{headerShown: false}} 
             />
 
             <Stack.Screen 
             name="SignIn"
             component={SignIn}
-            options={{headerShown: false}} // retirar os header da pagina
+            options={{headerShown: false}} 
             />
             <Stack.Screen 
             name="Home"
             component={Home}
-            options={{headerShown: false}} // retirar os header da pagina
+            options={{headerShown: false}} 
             />
         </Stack.Navigator>
     )
