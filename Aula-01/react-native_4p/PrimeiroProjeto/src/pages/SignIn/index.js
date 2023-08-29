@@ -9,8 +9,8 @@ import { TextInputMask } from 'react-native-masked-text';
 
 
 const schema = yup.object({
-    name: yup.string().required("Informe seu nome, Hunter!"),
-    password : yup.string().required("Informe sua senha, Hunter!"),
+    name: yup.string().required("Informe seu nome, Agente!"),
+    password : yup.string().required("Informe sua senha, Agente!"),
     
 })
 
@@ -30,20 +30,14 @@ const schema = yup.object({
     return(
         <View style={styles.containerGODOY} animation="flipInY">
             <Image
-            source={require('../../assets/pokemonlogo.png')}
-            style={styles.logomed} 
-            resizeMode = "contain"
-            
-            />
-            <Image
-            source={require('../../assets/pokemonbk.png')}
-            style={styles.logopokemon} 
+            source={require('../../assets/valorant.webp')}
+            style={{height:"80%", marginTop:0,alignSelf:"center", position:"absolute",}} 
             resizeMode = "contain"
             
             />
             
             <Animatable.View animation="fadeInUp" delay={200} style={styles.containerform}>
-            <Text style={styles.bemvindo}>Bem Vindo(a) Hunter!</Text>
+            <Text style={styles.bemvindo}>Bem Vindo(a) Agente!</Text>
                     <Controller
                     control={control}
                     name="name"
@@ -51,7 +45,7 @@ const schema = yup.object({
                         <View style={[
                             styles.inputName,
                             {
-                                borderWidth: errors.name ? 1 : 1,
+                                borderWidth: errors.name ? 0.5 : 0.5,
                                 borderColor: errors.name ? 'red' : 'black',
                             },
                             ]}>
@@ -60,7 +54,7 @@ const schema = yup.object({
                     onChangeText={onChange}
                     value={value}
                     onBlur={onBlur}
-                    placeholder="Digite seu nome Hunter"
+                    placeholder="Digite seu email"
                     style={{ flex: 1 }}
                     />
                     
@@ -77,7 +71,7 @@ const schema = yup.object({
                                 <View style={[
                                 styles.inputSENHA,
                                 {
-                                    borderWidth: errors.password ? 1 : 1,
+                                    borderWidth: errors.password ? 0.5 : 0.5,
                                     borderColor: errors.password ? 'red' : 'black',
                                 },
                                 ]}>
@@ -85,9 +79,9 @@ const schema = yup.object({
                                     onChangeText={onChange}
                                     value={value}
                                     onBlur={onBlur}
-                                    placeholder="Digite sua senha Hunter"
+                                    placeholder="Digite sua senha "
                                     secureTextEntry={!showPassword}
-                                    style={{ flex: 1 }}
+                                    style={{ flex: 1  }}
                                     
                                 />
                                 
@@ -112,7 +106,7 @@ const schema = yup.object({
 const styles = StyleSheet.create ({
     containerGODOY: {
         flex: 1,
-        backgroundColor: '#060607',
+        backgroundColor: '#173154',
         
     },
     iconPASSWORD:{
@@ -140,14 +134,6 @@ const styles = StyleSheet.create ({
 
 
     },
-    logomed:{
-        flex:1,
-        zIndex:3,
-        width:'100%',
-        marginTop:-190,
-        
-
-    },
     containerHeader :{
         marginTop: '15%',
         marginBottom: '8%',
@@ -160,14 +146,14 @@ const styles = StyleSheet.create ({
         
     },
     containerform: {
+        flex:1,
         backgroundColor: 'white',
         borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
+        borderTopRightRadius: 30,
         paddingStart: '5%',
         paddingEnd: '5%',
-        marginTop: '20%',
-        width:"100%",
-        height:"40%",
+        marginTop:380,
+
     },
     title:{
         fontSize: 20,
@@ -177,8 +163,8 @@ const styles = StyleSheet.create ({
     inputName: {
         paddingLeft: 10,
         height: 40,
-        marginBottom: 12,
-        marginTop: 10,
+        marginBottom: 20,
+        marginTop: -10,
         fontSize: 16,
         backgroundColor: 'transparent',
         borderRadius: 30,
@@ -189,9 +175,9 @@ const styles = StyleSheet.create ({
       },
     
       inputSENHA: {
-        paddingLeft: 10,
+        paddingLeft: 6,
         height: 40,
-        marginBottom: 12,
+        marginBottom: 15,
         fontSize: 16,
         borderRadius: 30, 
         borderColor: 'black', 
@@ -201,11 +187,11 @@ const styles = StyleSheet.create ({
       },
    
     button:{
-       backgroundColor: '#3d5eb4',
+       backgroundColor: '#ff4655',
        width: '80%',
        borderRadius: 100,
        paddingVertical: 8,
-       marginTop: 14,
+       marginTop: 0,
        justifyContent: 'center',
        alignItems:'center',
        marginLeft: 32,
@@ -218,13 +204,13 @@ const styles = StyleSheet.create ({
 
     },
     buttonEsqueceuSenha:{
-        marginTop:25,
+        marginTop:15,
         alignSelf:'center',
         zIndex: 2,
         
     },
     Esenhatext:{
-        color:'#fac705',
+        color:'#173154',
     },
 
     erroNome: {
@@ -239,7 +225,7 @@ const styles = StyleSheet.create ({
     erroSENHA: {
         alignSelf: 'flex-start',
         color: 'red',
-        marginBottom: 18,
+        marginBottom: 10,
         marginTop: -10,
         left: 15,
         

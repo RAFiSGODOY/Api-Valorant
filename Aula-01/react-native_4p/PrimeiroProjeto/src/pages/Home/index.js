@@ -13,7 +13,7 @@ import Gengar from '../../assets/gifapp.gif';
             <View style={styles.containerLogo}>
                 <Animatble.Image
                 animation="flipInY"
-                source={require('../../assets/logoapp.gif')}
+                source={require('../../assets/apiimage.webp')}
                 style={{width:'100%'}}
                 resizeMode = "contain"
                 />

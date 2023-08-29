@@ -12,14 +12,14 @@ import {useNavigation }from '@react-navigation/native';
             <View style={styles.containerLogo}>
                 <Animatable.Image
                 animation="flipInY"
-                source={require('../../assets/gifapp.gif')}
-                style={{height:600, marginTop:104,alignSelf:"center",marginRight:90,}}
+                source={require('../../assets/Valorant_Postar_2.webp')}
+                style={{height:"100%", marginTop:100,alignSelf:"center",}}
                 resizeMode = "contain"
                 />
             </View>
 
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
-            <Text style={styles.ApresentaApp}>Conecte-se ao fascinante mundo dos Pokémons através da nossa API e desbloqueie um universo de informações e aventuras.</Text>
+            <Text style={styles.ApresentaApp}>Desafie seus limites e domine o campo de batalha no mundo implacável de Valorant!</Text>
             <Text style={styles.FÇlogin}>Faça o login para começar</Text>
             <TouchableOpacity style={styles.button}
             onPress={() => navigation.navigate('SignIn')}
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         marginTop: 15,
-        marginBottom: 12,
+        marginBottom: 5,
         textAlign: 'center',
     },
     FÇlogin:{
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     button: {
         position: 'absolute',
-        backgroundColor: '#3d5eb4',
+        backgroundColor: '#ff4655',
         borderRadius: 50,
         paddingVertical: 8,
         width: '60%',
