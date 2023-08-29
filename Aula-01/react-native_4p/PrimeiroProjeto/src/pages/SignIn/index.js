@@ -20,10 +20,37 @@ export default function Login() {
     password: yup.string().required("Informe sua senha, Agente!"),
   });
 
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const [errorEmail, setErrorEmail] = useState(null)
-  const [errorPassword, setErrorPassword] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [password, setPassword] = useState(null)
+    const [errorEmail, setErrorEmail] = useState(null)
+    const [errorPassword, setErrorPassword] = useState(null)
+    
+    const validar = () => {
+        let error = false
+        setErrorEmail(null)
+        setErrorPassword(null)
+        const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        if(!re.test(String(email).toLowerCase())){
+         setErrorEmail("Preencha seu e-mail!")
+         error = true
+        }
+        if(password == null){
+            setErrorPassword("Preencha sua Senha!")
+            error = true
+            }
+        return !error
+
+    }
+    const salvar = () => {
+        if(validar()){
+            console.log("salvo com sucesso rafis")
+            navigation.navigate("Welcome")
+        }
+        
+
+    }
+
+  
 
   return (
     <View style={styles.containerGODOY} animation="flipInY">
@@ -52,8 +79,7 @@ export default function Login() {
               },
             ]}>
               <TextInput
-                onChangeText={onChange}
-                value={value}
+                onChange={value=> {setEmail(value), setErrorEmail(null)} }
                 onBlur={onBlur}
                 placeholder="Digite seu email"
                 keyboardType="email-address"
@@ -76,8 +102,7 @@ export default function Login() {
               },
             ]}>
               <TextInput
-                onChangeText={onChange}
-                value={value}
+                onChange={value=> {setPassword(value), setErrorPassword(null)} }
                 onBlur={onBlur}
                 placeholder="Digite sua senha"
                 secureTextEntry={!showPassword}
@@ -95,7 +120,7 @@ export default function Login() {
         />
         {errors.password && <Text style={styles.erroSENHA}>{errors.password?.message}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Welcome")}>
+        <TouchableOpacity style={styles.button} onPress={() => salvar()}>
           <Text style={styles.buttontext}>Acessar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonEsqueceuSenha} onPress={() => navigation.navigate('Welcome')}>
