@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Welcome from '../pages/Welcome';
 import SignIn from '../pages/SignIn';
 import Home from '../pages/Home';
+import Cadastro from '../pages/Cadastro';
 
 
 
@@ -25,6 +26,11 @@ export default function Routes(){
             <Stack.Screen 
             name="Home"
             component={Home}
+            options={{headerShown: false}} 
+            />
+            <Stack.Screen 
+            name="Cadastro"
+            component={Cadastro}
             options={{headerShown: false}} 
             />
         </Stack.Navigator>

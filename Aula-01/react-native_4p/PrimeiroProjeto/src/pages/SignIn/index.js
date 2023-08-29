@@ -6,38 +6,24 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import * as yup from 'yup';
 import { showMessage, hideMessage } from 'react-native-flash-message';
-//import Icon from 'react-native-vector-icons/Ionicons';
 
-
-const schema = yup.object({
-  email: yup.string().required("Informe seu email, Agente!"),
-  password: yup.string().required("Informe sua senha, Agente!"),
-});
 
 export default function Login() {
   const navigation = useNavigation();
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
-
-  const message = {
-    message: 'Erro de Login',
-    description: 'Email ou senha incorretos. Por favor, tente novamente.',
-    type: 'danger',
-    backgroundColor: '#FF6347',
-    color: '#fff',
-  };
-
   const [showPassword, setShowPassword] = useState(false);
 
-  const signIn = (email, password) => {
-    if (email == "rafaelgpinguelo@gmail.com" && password == "rederafis") {
-      navigation.navigate("Welcome");
-    } else {
-    showMessage(message);
-      console.log("deu")
-    }
-  };
+  const schema = yup.object({
+    email: yup.string().required("Informe seu email, Agente!"),
+    password: yup.string().required("Informe sua senha, Agente!"),
+  });
+
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
+  const [errorEmail, setErrorEmail] = useState(null)
+  const [errorPassword, setErrorPassword] = useState(null)
 
   return (
     <View style={styles.containerGODOY} animation="flipInY">
@@ -70,6 +56,7 @@ export default function Login() {
                 value={value}
                 onBlur={onBlur}
                 placeholder="Digite seu email"
+                keyboardType="email-address"
                 style={{ flex: 1 }}
               />
             </View>
@@ -108,11 +95,14 @@ export default function Login() {
         />
         {errors.password && <Text style={styles.erroSENHA}>{errors.password?.message}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={() => handleSubmit(data => signIn(data.email, data.password))}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Welcome")}>
           <Text style={styles.buttontext}>Acessar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonEsqueceuSenha} onPress={() => navigation.navigate('Welcome')}>
           <Text style={styles.Esenhatext}>Esqueceu sua senha?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonCadrasto} onPress={() => navigation.navigate('Cadastro')}>
+          <Text style={styles.cadastro}>Novo por aqui ?Cadastre-se!</Text>
         </TouchableOpacity>
       </Animatable.View>
     </View>
@@ -124,6 +114,15 @@ const styles = StyleSheet.create ({
         flex: 1,
         backgroundColor: '#173154',
         
+    },
+    buttonCadrasto:{
+        position:"absolute",
+        top:278,
+        left:107,
+
+    },
+    cadastro:{
+        color: '#173154',
     },
     togglepassword:{
         position:"absolute",
@@ -235,7 +234,7 @@ const styles = StyleSheet.create ({
 
     },
     buttonEsqueceuSenha:{
-        marginTop:280,
+        marginTop:300,
         alignSelf:'center',
         zIndex: 2,
         position:"absolute",
@@ -243,6 +242,8 @@ const styles = StyleSheet.create ({
     },
     Esenhatext:{
         color:'#173154',
+        fontSize:12,
+        textDecorationLine: "underline",
     },
 
     erroNome: {
