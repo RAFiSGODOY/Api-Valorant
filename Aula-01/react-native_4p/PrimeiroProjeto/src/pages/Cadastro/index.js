@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Modal} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Modal, KeyboardAvoidingView, Platform} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useNavigation }from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
-
-
-  
-
  export default function Cadastro(){
     const navigation = useNavigation();
     const [email, setEmail] = useState(null)
@@ -25,32 +21,17 @@ import { TextInputMask } from 'react-native-masked-text';
         setErrorTelefone(null)
         setErrorNome(null)
         setErrorPassword(null)
+        const re =  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if(password == null && nome == null && email == null || !re.test(String(email).toLowerCase()) && telefone == null){
             setErrorTotais("Preencha todos os campos!")
             setShowModal(true);
             error = true
         }
-        const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if(!re.test(String(email).toLowerCase())){
-         setErrorEmail("Preencha seu e-mail!")
-         setShowModal(true);
-         error = true
-        }
-        if(nome == null){
-         setErrorNome("Preencha seu Nome!")
-         setShowModal(true);
-         error = true
-        }
-        if(telefone == null){
-            setErrorTelefone("Preencha seu Telefone!")
+        if(password == null || nome == null || email == null || !re.test(String(email).toLowerCase()) || telefone == null){
+            setErrorTotais("Preencha todos os campos!")
             setShowModal(true);
             error = true
         }
-        if(password == null){
-            setErrorPassword("Preencha sua Senha!")
-            setShowModal(true);
-            error = true
-            }
        
         return !error
 
@@ -70,11 +51,10 @@ import { TextInputMask } from 'react-native-masked-text';
                 <Animatable.Image
                 animation="flipInY"
                 source={require('../../assets/paginacadastro.jpg')}
-                style={{height:"130%", marginTop:10,alignSelf:"center", left:30}}
+                style={{height:"120%", marginBottom:90,alignSelf:"center" , left:30}}
                 resizeMode = "contain"
                 />
             </View>
-
             <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
             <Text style={styles.ApresentaApp}>Cadastro</Text>
             <TextInput
@@ -125,69 +105,20 @@ import { TextInputMask } from 'react-native-masked-text';
                 <Image source={require('../../assets/logoalert.webp')}
                 style={styles.imagealert}
                 resizeMode = "contain"/>
-                <Text style={styles.modalMessage}>{errorEmail}</Text>
-                <TouchableOpacity style={styles.modalButton} onPress={() => setShowModal(false)}>
-                 <Text style={styles.modalButtonText}>Ok</Text>
+                 <Text style={styles.modalMessage}>
+                    {errorTotais}
+                </Text>
+                <TouchableOpacity
+                    style={styles.modalButton}
+                    onPress={() => setShowModal(false)}
+                        >
+                <Text style={styles.modalButtonText}>Ok</Text>
                 </TouchableOpacity>
                 </View>
                 </View>
                 </Modal>
-                <Modal visible={showModal} transparent  animationType="fade">
-                <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                <Image source={require('../../assets/logoalert.webp')}
-                style={styles.imagealert}
-                resizeMode = "contain"/>
-                <Text style={styles.modalMessage}>{errorTelefone}</Text>
-                <TouchableOpacity style={styles.modalButton} onPress={() => setShowModal(false)}>
-                 <Text style={styles.modalButtonText}>Ok</Text>
-                </TouchableOpacity>
-                </View>
-                </View>
-                </Modal>
-                <Modal visible={showModal} transparent  animationType="fade">
-                <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                <Image source={require('../../assets/logoalert.webp')}
-                style={styles.imagealert}
-                resizeMode = "contain"/>
-                <Text style={styles.modalMessage}>{errorNome}</Text>
-                <TouchableOpacity style={styles.modalButton} onPress={() => setShowModal(false)}>
-                 <Text style={styles.modalButtonText}>Ok</Text>
-                </TouchableOpacity>
-                </View>
-                </View>
-                </Modal>
-                <Modal visible={showModal} transparent  animationType="fade">
-                <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                <Image source={require('../../assets/logoalert.webp')}
-                style={styles.imagealert}
-                resizeMode = "contain"/>
-                <Text style={styles.modalMessage}>{errorPassword}</Text>
-                <TouchableOpacity style={styles.modalButton} onPress={() => setShowModal(false)}>
-                 <Text style={styles.modalButtonText}>Ok</Text>
-                </TouchableOpacity>
-                </View>
-                </View>
-                </Modal>
-                <Modal visible={showModal} transparent  animationType="fade">
-                <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                <Image source={require('../../assets/logoalert.webp')}
-                style={styles.imagealert}
-                resizeMode = "contain"/>
-                <Text style={styles.modalMessage}>{errorTotais}</Text>
-                <TouchableOpacity style={styles.modalButton} onPress={() => setShowModal(false)}>
-                 <Text style={styles.modalButtonText}>Ok</Text>
-                </TouchableOpacity>
-                </View>
-                </View>
-                </Modal>
+                
             </Animatable.View>
-            
-
-
         </View>
     );
  };
@@ -195,7 +126,7 @@ import { TextInputMask } from 'react-native-masked-text';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor : '#060607',
+        zIndex:0,
     },
     imagealert: {
         width:200,
@@ -253,8 +184,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         borderColor: 'white', 
         borderWidth: 1,
-        marginTop: 40,
-        zIndex: 2,
+        marginTop: 30,
         opacity:1,
 
     },
@@ -268,7 +198,6 @@ const styles = StyleSheet.create({
         borderColor: 'white', 
         borderWidth: 1,
         marginTop: 20,
-        zIndex: 2,
         opacity:1,
 
     },
@@ -282,7 +211,6 @@ const styles = StyleSheet.create({
         borderColor: 'white', 
         borderWidth: 1,
         marginTop: 20,
-        zIndex: 2,
         opacity:1,
 
     },
@@ -296,7 +224,6 @@ const styles = StyleSheet.create({
         borderColor: 'white', 
         borderWidth: 1,
         marginTop: 20,
-        zIndex: 2,
         opacity:1,
 
     },
@@ -305,13 +232,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#060607',
         justifyContent: 'center',
         alignItems: ' center',
-        position:"relative",
-        
-        
-
     },
     containerForm: {
-        position:"absolute",
         backgroundColor: 'transparent',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
@@ -321,10 +243,11 @@ const styles = StyleSheet.create({
         paddingEnd: '5%',
         borderWidth:2,
         borderColor: '#ff4655',
-        width:"98%",
-        height:"70%",
-        marginTop:100,
-        marginLeft:4,
+        width:"95%",
+        height:"96%",
+        marginTop:10,
+        marginLeft:10,
+        position:"absolute",
         
 
     },
@@ -347,7 +270,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         width: '40%',
         alignSelf: 'center',
-        top: 70,
+        top: 80,
         alignItems: 'center',
         justifyContent: 'center',
         position:"relative",

@@ -1,56 +1,31 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Image, Linking } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { showMessage, hideMessage } from 'react-native-flash-message';
 
+const schema = yup.object().shape({
+  email: yup.string().required("Informe seu email, Agente!"),
+  password: yup.string().required("Informe sua senha, Agente!"),
+});
 
 export default function Login() {
   const navigation = useNavigation();
-  const { control, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const schema = yup.object({
-    email: yup.string().required("Informe seu email, Agente!"),
-    password: yup.string().required("Informe sua senha, Agente!"),
-  });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
-    const [email, setEmail] = useState(null)
-    const [password, setPassword] = useState(null)
-    const [errorEmail, setErrorEmail] = useState(null)
-    const [errorPassword, setErrorPassword] = useState(null)
-    
-    const validar = () => {
-        let error = false
-        setErrorEmail(null)
-        setErrorPassword(null)
-        const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-        if(!re.test(String(email).toLowerCase())){
-         setErrorEmail("Preencha seu e-mail!")
-         error = true
-        }
-        if(password == null){
-            setErrorPassword("Preencha sua Senha!")
-            error = true
-            }
-        return !error
-
-    }
-    const salvar = () => {
-        if(validar()){
-            console.log("salvo com sucesso rafis")
-            navigation.navigate("Welcome")
-        }
-        
-
-    }
-
-  
+  const handleLinkPress = () => {
+    const url = 'https://support-valorant.riotgames.com/hc/pt-br/articles/360046229573-Recupere-sua-conta#:~:text=Ferramenta%20Recuperação%20de%20Conta,-Recuperação%20de%20Nome&text=Recupere%20sua%20senha%20através%20do%20e-mail%20vinculado%20à%20sua%20conta.&text=Caso%20ainda%20não%20consiga%20acessar,a%20recuperação%20automática%20da%20conta.&text=Responda%20a%20uma%20série%20de%20perguntas%20para%20recuperar%20sua%20conta%20perdida.';
+    Linking.openURL(url);
+  };
 
   return (
     <View style={styles.containerGODOY} animation="flipInY">
@@ -63,49 +38,41 @@ export default function Login() {
       <Animatable.View animation="fadeInUp" delay={200} style={styles.containerform}>
         <Text style={styles.bemvindo}>Bem Vindo(a) Agente!</Text>
         <Image
-        source={require('../../assets/logovava2.png')}
-        style={{ height: "25%", marginTop: 340, alignSelf: "center", position: "absolute" }}
-        resizeMode="contain"
-      />
+          source={require('../../assets/logovava2.png')}
+          style={{ height: "25%", marginTop: 340, alignSelf: "center", position: "absolute" }}
+          resizeMode="contain"
+        />
         <Controller
           control={control}
           name="email"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={[
-              styles.inputName,
-              {
-                borderWidth: errors.email ? 0.5 : 0.5,
-                borderColor: errors.email ? 'red' : 'black',
-              },
-            ]}>
+          defaultValue=""
+          render={({ field }) => (
+            <View style={styles.inputName}>
               <TextInput
-                onChange={value=> {setEmail(value), setErrorEmail(null)} }
-                onBlur={onBlur}
                 placeholder="Digite seu email"
                 keyboardType="email-address"
+                value={field.value}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
                 style={{ flex: 1 }}
               />
             </View>
           )}
         />
-        {errors.email && <Text style={styles.erroNome}>{errors.email?.message}</Text>}
+        {errors.email && <Text style={styles.erroNome}>{errors.email.message}</Text>}
 
         <Controller
           control={control}
           name="password"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={[
-              styles.inputSENHA,
-              {
-                borderWidth: errors.password ? 0.5 : 0.5,
-                borderColor: errors.password ? 'red' : 'black',
-              },
-            ]}>
+          defaultValue=""
+          render={({ field }) => (
+            <View style={styles.inputSENHA}>
               <TextInput
-                onChange={value=> {setPassword(value), setErrorPassword(null)} }
-                onBlur={onBlur}
                 placeholder="Digite sua senha"
                 secureTextEntry={!showPassword}
+                value={field.value}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
                 style={{ flex: 1 }}
               />
               <TouchableOpacity
@@ -118,21 +85,23 @@ export default function Login() {
             </View>
           )}
         />
-        {errors.password && <Text style={styles.erroSENHA}>{errors.password?.message}</Text>}
+        {errors.password && <Text style={styles.erroSENHA}>{errors.password.message}</Text>}
 
-        <TouchableOpacity style={styles.button} onPress={() => salvar()}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttontext}>Acessar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonEsqueceuSenha} onPress={() => navigation.navigate('Welcome')}>
+        <TouchableOpacity style={styles.buttonEsqueceuSenha} onPress={handleLinkPress}>
           <Text style={styles.Esenhatext}>Esqueceu sua senha?</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.buttonCadrasto} onPress={() => navigation.navigate('Cadastro')}>
-          <Text style={styles.cadastro}>Novo por aqui ?Cadastre-se!</Text>
+          <Text style={styles.cadastro}>Novo por aqui ? Cadastre-se!</Text>
         </TouchableOpacity>
       </Animatable.View>
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create ({
     containerGODOY: {
@@ -204,7 +173,6 @@ const styles = StyleSheet.create ({
         paddingEnd: '5%',
         marginTop:300,
         position:"relative",
-        opacity: 0.5,
 
     },
     title:{
