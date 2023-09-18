@@ -33,6 +33,11 @@ export default function Routes(){
             component={Cadastro}
             options={{headerShown: false}} 
             />
+            <Stack.Screen 
+            name="Desc"
+            component={Desc}
+            options={{headerShown: false}} 
+            />
         </Stack.Navigator>
     )
     

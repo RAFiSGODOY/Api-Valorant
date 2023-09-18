@@ -30,13 +30,17 @@ const HomePage = ({}) => {
     );
   };
 
+  const handleDetalhes = (cardId) =>{
+    navigation.navigate("Desc", {id : cardId});
+  }
+
   return (
-    <View>
+    <View style={styles.viewback}>
       <Text style={styles.header}>Home</Text>
       <Image
         source={require('../../assets/backvava.jpg')}
         style={{ height: "100%", width: "100%", position: "absolute" }}
-        resizeMode="cover"
+        resizeMode="contain"
       />
       <Animatable.View style={styles.tela} animation="fadeInUp" delay={400}>
         <FlatList
@@ -85,6 +89,10 @@ const styles = StyleSheet.create({
     height:110,
     marginLeft:7,
     zIndex:0,
+  },
+  viewback:{
+    backgroundColor:"black",
+
   },
   back:{
     position:"absolute",

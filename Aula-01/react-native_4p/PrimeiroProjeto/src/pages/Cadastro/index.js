@@ -3,8 +3,10 @@ import {View, Text, StyleSheet, Image, TouchableOpacity, TextInput, Modal, Keybo
 import * as Animatable from 'react-native-animatable';
 import {useNavigation }from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
+import { useRoute } from '@react-navigation/native';
  export default function Cadastro(){
     const navigation = useNavigation();
+    const route = useRoute();
     const [email, setEmail] = useState(null)
     const [nome, setNome] = useState(null)
     const [telefone, setTelefone] = useState(null)
@@ -15,6 +17,7 @@ import { TextInputMask } from 'react-native-masked-text';
     const [errorTelefone, setErrorTelefone] = useState(null)
     const [errorTotais, setErrorTotais] = useState(null)
     const [showModal, setShowModal] = useState(false);
+    
     const validar = () => {
         let error = false
         setErrorEmail(null)
@@ -37,9 +40,12 @@ import { TextInputMask } from 'react-native-masked-text';
 
     }
     const salvar = () => {
+        
         if(validar()){
+            
+            
             console.log("salvo com sucesso rafis")
-            navigation.navigate("SignIn")
+            navigation.navigate("SignIn", { email, password})
         }
         
 
